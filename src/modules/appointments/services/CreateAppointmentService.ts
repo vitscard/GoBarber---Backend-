@@ -4,7 +4,7 @@ import AppError from '@shared/errors/AppError';
 
 import Appointment from '../infra/typeorm/entities/Appointment';
 
-import IAppointmentRepository from '@modules/appointments/repositories/IAppointmentsRepository';
+import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 
 interface IRequest {
   provider_id: string;
@@ -14,14 +14,14 @@ interface IRequest {
 @injectable()
 class CreateAppointmentService {
   constructor(
-    @inject('AppointmentRepository')
-    private appointmentRepository: IAppointmentRepository,
+    @inject('AppointmentsRepository')
+    private appointmentsRepository: IAppointmentsRepository,
   ) {}
 
   public async execute({ provider_id, date }: IRequest): Promise<Appointment> {
     const appointmentDate = startOfHour(date);
 
-    const findAppointmentInSameDate = await this.appointmentRepository.findByDate(
+    const findAppointmentInSameDate = await this.appointmentsRepository.findByDate(
       appointmentDate,
     );
 
@@ -29,7 +29,7 @@ class CreateAppointmentService {
       throw new AppError('This appointment is alredy booked', 400);
     }
 
-    const appointment = await this.appointmentRepository.create({
+    const appointment = await this.appointmentsRepository.create({
       provider_id,
       date: appointmentDate,
     });

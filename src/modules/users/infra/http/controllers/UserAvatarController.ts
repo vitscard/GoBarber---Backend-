@@ -12,6 +12,7 @@ export default class UserAvatarController {
     });
 
     delete user.password;
+
     return response.json(user);
   }
 }
