@@ -6,7 +6,7 @@ import AppError from '@shared/errors/AppError';
 let fakeUserRepository: FakeUserRepository;
 let showProfile: ShowProfileService;
 
-describe('UpdateProfile', () => {
+describe('ShowProfile', () => {
   beforeEach(() => {
     fakeUserRepository = new FakeUserRepository();
 
